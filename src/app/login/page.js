@@ -1,0 +1,68 @@
+'use client';
+import { useRouter } from 'next/navigation';
+import {React, useState } from 'react';
+import { MDBContainer, MDBInput, MDBCheckbox, MDBBtn, MDBIcon } from 'mdb-react-ui-kit';
+import { Alert } from 'react-bootstrap';
+import { login } from '@/lib/auth';
+
+
+export default function Page(){
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [show, setShow] = useState(false);
+    const [message, setMessage] = useState('');
+    const [type, setType] = useState('');
+
+    const router = useRouter();
+
+    const handleLogin = async (e) => {
+        e.preventDefault();
+
+        const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/hero/auth/login`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                email: email,
+                password: password,
+            }),
+        });
+
+        const data = await res.json();
+
+        console.log(data.message);
+
+        if(data.message === `Login Successful`){
+            console.log('Login Successful: ', data);
+            setMessage(data.message);
+            setType('success');
+
+            await login(data);
+
+            router.push('/dashboard');
+        }
+        else{
+            console.error('Login Failed', data);
+            setMessage(data.message);
+            setType('danger');
+        }
+        setShow(true);
+    }
+
+    return(
+        <MDBContainer className="p-4 my-5 d-flex flex-column w-50">
+            <form onSubmit={handleLogin} className="p-4 my-5 d-flex flex-column">
+                {show && (<Alert key={type} variant={type} onClose={() => setShow(false)} dismissible>{message}</Alert>)}
+                <MDBInput wrapperClass='mb-4' label='Email address' id='form1' type='email' onChange={(e) => setEmail(e.target.value)} />
+                <MDBInput wrapperClass='mb-4' label='Password' id='form2' type='password' onChange={(e) => setPassword(e.target.value)} />
+                <MDBBtn type="submit" className="mb-4">Sign in</MDBBtn>
+            </form>
+            <div className="d-flex justify-content-between mx-3 mb-4">
+            </div>
+            <div className="text-center">
+                <p>Not a member? <a href="/register">Register</a></p>
+            </div>
+        </MDBContainer>
+    )
+}
