@@ -21,7 +21,6 @@ export async function POST(req: Request){
     }
 
     try{
-        // Get hero row
         const hero = await query({
             query: `SELECT * FROM hero WHERE email = ?;`,
             values: [email],
@@ -29,10 +28,9 @@ export async function POST(req: Request){
     
         const hashedPass = hero[0].password;
         
-        // Check password input and hashed password (in hero row)
         if(bcrypt.compareSync(password, hashedPass)){
             const { id, first_name, last_name, email } = hero[0]
-            console.info(`Login Successful`);
+
             return NextResponse.json({ 
                 message: "Login Successful",
                 hero: { id, first_name, last_name, email }
@@ -45,8 +43,6 @@ export async function POST(req: Request){
             });
         }
         else{
-            // Incorrect password
-            console.info(`Incorrect password`);
             return NextResponse.json({ 
                 message: "Incorrect password",
                 hero: { email, password }
@@ -60,8 +56,6 @@ export async function POST(req: Request){
         }
     }
     catch(err){
-        console.error('Error loging in');
-
         let message = 'Email does not exist';
         let status = 401;
 

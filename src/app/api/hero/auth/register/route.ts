@@ -10,16 +10,12 @@ export async function POST (req: Request){
 
     const { first_name, last_name, email, password } = body;
 
-    // Generate UUID
     const id = uuidv4();
 
-    // Salt and Hash password
     const salt = bcrypt.genSaltSync(saltRounds);
     const hash = bcrypt.hashSync(password, salt);
 
-    // All fields required check
     if(!first_name?.trim() || !last_name?.trim() || !email?.trim() || !password?.trim()){
-        console.error('All fields are required and cannot be empty.')
         return NextResponse.json({
             message: 'All fields are required and cannot be empty.',
         }, {
@@ -30,14 +26,13 @@ export async function POST (req: Request){
         }); 
     }
 
-    // Ze majik
     try{
         const res = await query({
             query: `INSERT INTO hero(id, first_name, last_name, email, password)
                         VALUES(?, ?, ?, ?, ?);`,
             values: [id, first_name, last_name, email, hash]
         });
-        console.info("Registration Successful");        
+     
         return NextResponse.json({ 
             message: "Registration Successful",
             hero: { id, first_name, last_name, email },
@@ -51,8 +46,6 @@ export async function POST (req: Request){
         });
     }
     catch(err){
-        console.error('Error registering user');
-
         let message = 'An unexpected error occured';
         let status = 500;
 

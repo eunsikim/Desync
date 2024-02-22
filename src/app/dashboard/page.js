@@ -1,5 +1,6 @@
 'use client'
-
+import 'mdb-react-ui-kit/dist/css/mdb.min.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import { logout } from "@/lib/auth"
 import { redirect } from "next/navigation";
 

@@ -1,4 +1,6 @@
 'use client';
+import 'mdb-react-ui-kit/dist/css/mdb.min.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import {React, useState} from 'react';
 import { MDBContainer, MDBInput, MDBCheckbox, MDBBtn, MDBIcon } from 'mdb-react-ui-kit';
 import { Alert } from 'react-bootstrap';
@@ -30,10 +32,7 @@ export default function login(){
 
         const data = await res.json();
 
-        console.log(data.message);
-
         if(data.message === `Registration Successful`){
-            console.log('Registration Successful: ', data);
             setMessage(data.message);
             setType('success');
 
@@ -43,7 +42,6 @@ export default function login(){
             setPassword('');
         }
         else{
-            console.error('Registration Failed', data);
             setMessage(data.message);
             setType('danger');
             setPassword('');

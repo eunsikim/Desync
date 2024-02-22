@@ -1,7 +1,4 @@
 import { Inter } from "next/font/google";
-import "./globals.css";
-import 'mdb-react-ui-kit/dist/css/mdb.min.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -12,8 +9,11 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body className={inter.className}>{children}</body>
-    </html>
+    <div className={inter.className}>
+      {children}
+    </div>
   );
+  //  Changed the `html` and `body` tag because it was causing:
+  //    warning: Did not expect server HTML to contain a <div> in <div>
+  //  This seems to have fix that, still not 100% sure why
 }
