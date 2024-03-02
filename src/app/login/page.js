@@ -39,6 +39,8 @@ export default function Page() {
 			}
 		);
 
+		// console.log(await res.json());
+
 		const data = await res.json();
 
 		if (data.message === `Login Successful`) {
