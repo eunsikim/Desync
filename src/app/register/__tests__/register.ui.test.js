@@ -14,15 +14,7 @@ import Page from "@/app/register/page";
 global.fetch = jest.fn((http, req) => {
 	const { first_name, last_name, email, password } = JSON.parse(req.body);
 
-	// console.log(`${email} ${password}`);
-
 	let message;
-
-	// if (email === "kimeunsik229@gmail.com" && password === "Eakl30103992!!") {
-	// 	message = "Login Successful";
-	// } else {
-	// 	message = "ERROR";
-	// }
 
 	if (
 		!first_name?.trim() ||
