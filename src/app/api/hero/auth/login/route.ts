@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import Server, { NextResponse, NextRequest } from "next/server";
 import { query } from "@/lib/mysql";
 import bcrypt from "bcrypt";
 
@@ -9,10 +9,10 @@ export async function POST(req: Request) {
 
 	// All fields required check
 	if (!email?.trim() || !password?.trim()) {
-		return NextResponse.json(
-			{
+		let res = new NextResponse(
+			JSON.stringify({
 				message: "All fields are required and cannot be empty.",
-			},
+			}),
 			{
 				status: 400,
 				headers: {
@@ -20,6 +20,7 @@ export async function POST(req: Request) {
 				},
 			}
 		);
+		return res;
 	}
 
 	try {
@@ -33,11 +34,11 @@ export async function POST(req: Request) {
 		if (bcrypt.compareSync(password, hashedPass)) {
 			const { id, first_name, last_name, email } = hero[0];
 
-			return NextResponse.json(
-				{
+			let res = new NextResponse(
+				JSON.stringify({
 					message: "Login Successful",
 					hero: { id, first_name, last_name, email },
-				},
+				}),
 				{
 					status: 200,
 					headers: {
@@ -45,12 +46,13 @@ export async function POST(req: Request) {
 					},
 				}
 			);
+			return res;
 		} else {
-			return NextResponse.json(
-				{
+			let res = new NextResponse(
+				JSON.stringify({
 					message: "Incorrect password",
 					hero: { email, password },
-				},
+				}),
 				{
 					status: 401,
 					headers: {
@@ -58,23 +60,21 @@ export async function POST(req: Request) {
 					},
 				}
 			);
+			return res;
 		}
 	} catch (err) {
-		let message = "Email does not exist";
-		let status = 401;
-
-		return NextResponse.json(
+		let res = new NextResponse(
+			JSON.stringify({
+				message: "Email does not exist",
+				hero: { email, password },
+			}),
 			{
-				error_code: err.code,
-				message: message,
-				error_number: err.errno,
-			},
-			{
-				status: status,
+				status: 401,
 				headers: {
 					"Content-Type": "application.json",
 				},
 			}
 		);
+		return res;
 	}
 }

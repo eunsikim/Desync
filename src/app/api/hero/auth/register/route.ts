@@ -21,10 +21,10 @@ export async function POST(req: Request) {
 		!email?.trim() ||
 		!password?.trim()
 	) {
-		return NextResponse.json(
-			{
+		let res = new NextResponse(
+			JSON.stringify({
 				message: "All fields are required and cannot be empty.",
-			},
+			}),
 			{
 				status: 400,
 				headers: {
@@ -32,21 +32,22 @@ export async function POST(req: Request) {
 				},
 			}
 		);
+		return res;
 	}
 
 	try {
-		const res = await query({
+		const hero = await query({
 			query: `INSERT INTO hero(id, first_name, last_name, email, password)
                         VALUES(?, ?, ?, ?, ?);`,
 			values: [id, first_name, last_name, email, hash],
 		});
 
-		return NextResponse.json(
-			{
+		let res = new NextResponse(
+			JSON.stringify({
 				message: "Registration Successful",
 				hero: { id, first_name, last_name, email },
-				res: res,
-			},
+				res: hero,
+			}),
 			{
 				status: 200,
 				headers: {
@@ -54,6 +55,7 @@ export async function POST(req: Request) {
 				},
 			}
 		);
+		return res;
 	} catch (err) {
 		let message = "An unexpected error occured";
 		let status = 500;
@@ -63,12 +65,12 @@ export async function POST(req: Request) {
 			status = 409;
 		}
 
-		return NextResponse.json(
-			{
+		let res = new NextResponse(
+			JSON.stringify({
 				error_code: err.code,
 				message: message,
 				error_number: err.errno,
-			},
+			}),
 			{
 				status: status,
 				headers: {
@@ -76,5 +78,6 @@ export async function POST(req: Request) {
 				},
 			}
 		);
+		return res;
 	}
 }

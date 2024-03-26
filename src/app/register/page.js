@@ -93,7 +93,7 @@ export default function login() {
 					wrapperClass="mb-4"
 					label="Email"
 					value={email}
-					id="form1"
+					id="form3"
 					type="email"
 					onChange={(e) => setEmail(e.target.value)}
 				/>
@@ -101,7 +101,7 @@ export default function login() {
 					wrapperClass="mb-4"
 					label="Password"
 					value={password}
-					id="form2"
+					id="form4"
 					type="password"
 					onChange={(e) => setPassword(e.target.value)}
 				/>

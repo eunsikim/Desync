@@ -8,7 +8,12 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
-	return <div className={inter.className}>{children}</div>;
+	// return <div className={inter.className}>{children}</div>;
+	return (
+		<html>
+			<body className={inter.className}>{children}</body>
+		</html>
+	);
 	//  Changed the `html` and `body` tag because it was causing:
 	//    warning: Did not expect server HTML to contain a <div> in <div>
 	//  This seems to have fix that, still not 100% sure why
