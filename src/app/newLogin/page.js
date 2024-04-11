@@ -51,8 +51,6 @@ export default function Page() {
 
             secureLocalStorage.setItem("email", data.hero.email);
             secureLocalStorage.setItem("id", data.hero.id);
-            secureLocalStorage.setItem("firstName", data.hero.first_name);
-            secureLocalStorage.setItem("lastName", data.hero.last_name);
 
             router.push("/dashboard");
         } else {

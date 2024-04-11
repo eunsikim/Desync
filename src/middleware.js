@@ -6,9 +6,5 @@ export async function middleware(request) {
 }
 
 export const config = {
-    matcher: [
-        "/dashboard",
-        "/",
-        "/((?!|_next/static|_next/image|favicon.ico).*)",
-    ], // Removed the `api` because we use `api` route for api calls
+    matcher: ["/dashboard", "/((?!|_next/static|_next/image|favicon.ico).*)"], // Removed the `api` because we use `api` route for api calls
 };

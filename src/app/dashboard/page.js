@@ -16,6 +16,7 @@ import {
 } from "mdb-react-ui-kit";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import secureLocalStorage from "react-secure-storage";
 
 export default function dashboard() {
     const [games, setGames] = useState([]);
@@ -49,15 +50,6 @@ export default function dashboard() {
     return (
         <MDBContainer className="p-4 my-5 d-flex flex-column w-50">
             <h1>Welcome</h1>
-            <form
-                action={async () => {
-                    await logout();
-                    redirect("/login");
-                }}
-            >
-                <MDBBtn type="submit">LOGOUT</MDBBtn>
-            </form>
-
             <MDBRow>
                 {games.map((game, index) => {
                     return (
