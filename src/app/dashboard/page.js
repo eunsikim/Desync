@@ -1,26 +1,19 @@
 "use client";
-import "mdb-react-ui-kit/dist/css/mdb.min.css";
-import "bootstrap/dist/css/bootstrap.min.css";
-import { logout } from "@/lib/auth";
-import { redirect } from "next/navigation";
-import {
-    MDBContainer,
-    MDBCard,
-    MDBCardBody,
-    MDBCardTitle,
-    MDBCardText,
-    MDBCardImage,
-    MDBBtn,
-    MDBRow,
-    MDBCol,
-} from "mdb-react-ui-kit";
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import secureLocalStorage from "react-secure-storage";
+import { useRouter } from "next/navigation"; // Correct import for useRouter
+import {
+    Container,
+    Grid,
+    Card,
+    CardMedia,
+    CardContent,
+    CardActions,
+    Button,
+    Typography,
+} from "@mui/material";
 
-export default function dashboard() {
+export default function Dashboard() {
     const [games, setGames] = useState([]);
-
     const router = useRouter();
 
     useEffect(() => {
@@ -39,39 +32,48 @@ export default function dashboard() {
         fetchGames();
     }, []);
 
-    const GameButton = ({ gameId }) => {
-        const fetchGame = async () => {
-            router.push(`/game/${gameId}`);
-        };
-
-        return <MDBBtn onClick={fetchGame}>SELECT</MDBBtn>;
+    const handleSelectGame = (gameId) => {
+        router.push(`/game/${gameId}`);
     };
 
     return (
-        <MDBContainer className="p-4 my-5 d-flex flex-column w-50">
-            <h1>Welcome</h1>
-            <MDBRow>
-                {games.map((game, index) => {
-                    return (
-                        <MDBCol sm="6" key={index}>
-                            <MDBCard>
-                                <MDBCardImage
-                                    src="https://mdbootstrap.com/img/new/standard/nature/184.webp"
-                                    position="top"
-                                    alt="..."
-                                />
-                                <MDBCardBody>
-                                    <MDBCardTitle>{game.title}</MDBCardTitle>
-                                    <MDBCardText>
-                                        {game.description}
-                                    </MDBCardText>
-                                    <GameButton gameId={game.id} />
-                                </MDBCardBody>
-                            </MDBCard>
-                        </MDBCol>
-                    );
-                })}
-            </MDBRow>
-        </MDBContainer>
+        <Container sx={{ py: 4, maxWidth: "lg" }}>
+            <Typography variant="h4" gutterBottom>
+                Welcome
+            </Typography>
+            <Grid container spacing={4}>
+                {games.map((game, index) => (
+                    <Grid item xs={12} sm={6} key={index}>
+                        <Card>
+                            <CardMedia
+                                component="img"
+                                height="140"
+                                image="https://mdbootstrap.com/img/new/standard/nature/184.webp"
+                                alt={game.title}
+                            />
+                            <CardContent>
+                                <Typography variant="h5" component="div">
+                                    {game.title}
+                                </Typography>
+                                <Typography
+                                    variant="body2"
+                                    color="text.secondary"
+                                >
+                                    {game.description}
+                                </Typography>
+                            </CardContent>
+                            <CardActions>
+                                <Button
+                                    size="small"
+                                    onClick={() => handleSelectGame(game.id)}
+                                >
+                                    Select
+                                </Button>
+                            </CardActions>
+                        </Card>
+                    </Grid>
+                ))}
+            </Grid>
+        </Container>
     );
 }

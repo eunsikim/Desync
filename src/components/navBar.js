@@ -10,15 +10,16 @@ import { getSession } from "@/lib/auth";
 import { logout } from "@/lib/auth";
 
 export default function NavBar({ logged }) {
-    // const [logged, setLogged] = useState(false);
-    // const [user, setUser] = useState("");
-    // const [firstName, setFirstName] = useState("");
-    let firstName = "";
+    const [firstName, setFirstName] = useState("");
+
     const router = useRouter();
 
-    if (logged) {
-        firstName = secureLocalStorage.getItem("firstName");
-    }
+    useEffect(() => {
+        if (logged) {
+            const storedFirstName = secureLocalStorage.getItem("firstName");
+            setFirstName(storedFirstName);
+        }
+    }, [logged]);
 
     const loggOut = async () => {
         await logout();
@@ -30,7 +31,11 @@ export default function NavBar({ logged }) {
     };
 
     const handleLogoClick = () => {
-        router.push("/");
+        if (logged) {
+            router.push("/dashboard");
+        } else {
+            router.push("/");
+        }
     };
 
     return (
@@ -58,8 +63,6 @@ export default function NavBar({ logged }) {
                     >
                         Desync
                     </Typography>
-
-                    {/* <Button color="inherit">Login</Button> */}
 
                     {logged && (
                         <>
