@@ -31,13 +31,11 @@ export default async function ServerComponent(gameId) {
                     },
                 }
             );
-            console.log(res.status);
 
             if (res.status === 404) {
                 const newMetric = await addUser();
                 return newMetric;
             } else if (res.status != 200) {
-                console.log("asd");
                 throw new Error("Network response was not ok");
             }
             const metricData = await res.json();
@@ -98,7 +96,6 @@ export default async function ServerComponent(gameId) {
             );
 
             const gameMetric = await res.json();
-            console.log(gameMetric.metrics);
 
             const userMetric = {
                 gameMetric: [

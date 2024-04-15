@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 import PropTypes from "prop-types";
 import Metric from "@/app/game/metric";
-import { matchmakingAlgo } from "@/lib/matchmaking";
+import Matchmake from "@/app/game/matchmake";
 import secureLocalStorage from "react-secure-storage"; // Assuming you have this installed
 
 function CustomTabPanel(props) {
@@ -52,47 +52,10 @@ export default function ClientComponent(params) {
 
     const [value, setValue] = useState(0);
 
-    useEffect(() => {
-        const getGame = async () => {
-            const res = await fetch(
-                `${process.env.NEXT_PUBLIC_URL}/api/game/${params.param}`,
-                {
-                    method: "GET",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                }
-            );
-
-            const data = await res.json();
-
-            setGameId(data.game[0].id);
-            setGameTitle(data.game[0].title);
-            setGameDesc(data.game[0].description);
-            setGameMetric(data.game[0].metric);
-
-            const testing = await gameMetric;
-        };
-
-        const sesh = async () => {
-            const sessionPayload = await getUserID();
-
-            console.log(sessionPayload);
-        };
-
-        // getGame();
-        // sesh();
-    }, []);
+    useEffect(() => {}, []);
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
-    };
-
-    const startAlgo = () => {
-        matchmakingAlgo({
-            gameId: params.param,
-            userId: secureLocalStorage.getItem("id"),
-        });
     };
 
     return (
@@ -121,10 +84,10 @@ export default function ClientComponent(params) {
                 />
             </CustomTabPanel>
             <CustomTabPanel value={value} index={1}>
-                Item Two
-                <Button sx={{ ml: 2 }} onClick={startAlgo}>
-                    Edit
-                </Button>
+                <Matchmake
+                    gameId={params.param}
+                    userId={secureLocalStorage.getItem("id")}
+                />
             </CustomTabPanel>
             <CustomTabPanel value={value} index={2}>
                 Item Three

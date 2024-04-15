@@ -91,11 +91,7 @@ const mergeMetricsWithTemplate = (playerMetrics, template) => {
 };
 
 export async function matchmakingAlgo(params) {
-    console.log("STARTING");
     const { gameId, userId } = params;
-
-    console.log(`Getting all gameMetrics from game ${gameId}`);
-    console.log(`Matching players to ${userId}`);
 
     const players = await getGameMetrics(params);
     const player = await getUserMetric({ userId: userId });
@@ -130,10 +126,10 @@ export async function matchmakingAlgo(params) {
         };
     });
 
-    console.log(filter);
-    console.log(filterUser);
+    const matchmakeList = await RunAlgo({
+        player: filterUser,
+        players: filter,
+    });
 
-    await RunAlgo({ player: filterUser, players: filter });
-
-    return <h1>?</h1>;
+    return matchmakeList;
 }

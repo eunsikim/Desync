@@ -67,36 +67,53 @@ function calculateCompatibility(player1, player2) {
     });
     communicationScore /= communicationTypes.length;
 
-    // Total score calculation
+    // Calculate total compatibility score
     const totalScore =
         rankScore * 0.3 +
         roleScore * 0.3 +
         gameModeScore * 0.2 +
         communicationScore * 0.2;
-    return totalScore;
+    return {
+        rankScore,
+        roleScore,
+        gameModeScore,
+        communicationScore,
+        totalScore,
+    };
 }
 
 function findPlayerCompatibility(players, player) {
     const compatibilityResults = players
         .map((otherPlayer) => {
-            const score = calculateCompatibility(player, otherPlayer);
-            return { name: otherPlayer.name, score };
+            const {
+                rankScore,
+                roleScore,
+                gameModeScore,
+                communicationScore,
+                totalScore,
+            } = calculateCompatibility(player, otherPlayer);
+            return {
+                name: otherPlayer.name,
+                Rank: otherPlayer.Rank,
+                Roles: otherPlayer.Roles,
+                "Game Mode": otherPlayer["Game Mode"],
+                Communication: otherPlayer.Communication,
+                rankScore,
+                roleScore,
+                gameModeScore,
+                communicationScore,
+                totalCompatibility: totalScore,
+            };
         })
-        .sort((a, b) => b.score - a.score);
+        .sort((a, b) => b.totalCompatibility - a.totalCompatibility);
 
     return compatibilityResults;
 }
 
-export function RunAlgo(params) {
+export async function RunAlgo(params) {
     const { player, players } = params;
-
-    console.log(player[0]);
-    console.log(players);
 
     const res = findPlayerCompatibility(players, player[0]);
 
-    console.log(`Compatibility results for ${player[0].name}:`);
-    res.forEach((res) => {
-        console.log(`${res.name}: ${res.score.toFixed(2)}`);
-    });
+    return res;
 }

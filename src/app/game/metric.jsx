@@ -105,8 +105,6 @@ export default function Metric(param) {
 
     const handleSave = async () => {
         setEditable(!editable);
-        // console.log(selections);
-        // console.log(preferences);
 
         let updatedMetric = JSON.parse(JSON.stringify(preferences));
 
@@ -166,7 +164,7 @@ export default function Metric(param) {
     };
 
     return (
-        <Box sx={{ minWidth: 120, display: "flex", flexDirection: "column" }}>
+        <Box>
             <Box
                 sx={{
                     display: "flex",
