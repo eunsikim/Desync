@@ -13,7 +13,6 @@ export const metadata = {
 export default async function RootLayout({ children }) {
     const checkLogin = async () => {
         const session = await getSession();
-        console.log(session);
 
         if (session != null) {
             return true;

@@ -38,17 +38,14 @@ export default function Dashboard() {
 
     return (
         <Container sx={{ py: 4, maxWidth: "lg" }}>
-            <Typography variant="h4" gutterBottom>
-                Welcome
-            </Typography>
             <Grid container spacing={4}>
                 {games.map((game, index) => (
                     <Grid item xs={12} sm={6} key={index}>
                         <Card>
                             <CardMedia
                                 component="img"
-                                height="140"
-                                image="https://mdbootstrap.com/img/new/standard/nature/184.webp"
+                                height="240"
+                                image={`/${game.image}`}
                                 alt={game.title}
                             />
                             <CardContent>

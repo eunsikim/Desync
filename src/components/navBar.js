@@ -39,7 +39,7 @@ export default function NavBar({ logged }) {
     };
 
     return (
-        <Box sx={{ flexGrow: 1 }}>
+        <Box sx={{ flexGrow: 1, mb: 6 }}>
             <AppBar position="static">
                 <Toolbar>
                     <IconButton

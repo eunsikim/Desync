@@ -2,7 +2,6 @@ import { NextResponse } from "next/server";
 import { query } from "@/lib/mysql";
 
 export async function GET(req) {
-    console.log("Hehe");
     try {
         const games = await query({
             query: "SELECT * FROM game",
