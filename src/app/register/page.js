@@ -75,7 +75,7 @@ export default function login() {
             setAlertType("danger");
             setPassword("");
         }
-        setShow(true);
+        setShowAlert(true);
     };
 
     return (
@@ -90,7 +90,7 @@ export default function login() {
                     <Alert
                         severity={alertType}
                         onClose={() => setShowAlert(false)}
-                        dismissible
+                        dismissible="true"
                     >
                         {alertMessage}
                     </Alert>

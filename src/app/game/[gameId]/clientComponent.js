@@ -1,9 +1,19 @@
 "use client";
 import { useEffect, useState } from "react";
 import { getSession, getUserID } from "@/lib/auth";
-import { AppBar, Box, Container, Tab, Tabs, Typography } from "@mui/material";
+import {
+    AppBar,
+    Box,
+    Button,
+    Container,
+    Tab,
+    Tabs,
+    Typography,
+} from "@mui/material";
 import PropTypes from "prop-types";
 import Metric from "@/app/game/metric";
+import { matchmakingAlgo } from "@/lib/matchmaking";
+import secureLocalStorage from "react-secure-storage"; // Assuming you have this installed
 
 function CustomTabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -78,6 +88,13 @@ export default function ClientComponent(params) {
         setValue(newValue);
     };
 
+    const startAlgo = () => {
+        matchmakingAlgo({
+            gameId: params.param,
+            userId: secureLocalStorage.getItem("id"),
+        });
+    };
+
     return (
         <Container sx={{}}>
             <h1>{gameTitle}</h1>
@@ -105,6 +122,9 @@ export default function ClientComponent(params) {
             </CustomTabPanel>
             <CustomTabPanel value={value} index={1}>
                 Item Two
+                <Button sx={{ ml: 2 }} onClick={startAlgo}>
+                    Edit
+                </Button>
             </CustomTabPanel>
             <CustomTabPanel value={value} index={2}>
                 Item Three
