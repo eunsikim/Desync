@@ -158,8 +158,20 @@ export default function login() {
                         label="Region"
                         onChange={(e) => setRegion(e.target.value)}
                     >
-                        <MenuItem value="One">One</MenuItem>
-                        {/* Add more regions as needed */}
+                        <MenuItem value="NAE">
+                            NAE - North America East
+                        </MenuItem>
+                        <MenuItem value="NAC">
+                            NAC - North America Central
+                        </MenuItem>
+                        <MenuItem value="NAW">
+                            NAW - North America West
+                        </MenuItem>
+                        <MenuItem value="LATAM">LATAM - Latin America</MenuItem>
+                        <MenuItem value="EU">EU - Europe</MenuItem>
+                        <MenuItem value="OCE">OCE - Oceania</MenuItem>
+                        <MenuItem value="ASIA">ASIA - Asia</MenuItem>
+                        <MenuItem value="ME">ME - Middle East</MenuItem>
                     </Select>
                 </FormControl>
                 <FormControl fullWidth margin="normal">

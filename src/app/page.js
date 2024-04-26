@@ -49,8 +49,12 @@ export default function Page() {
                             <Typography variant="body1" paragraph>
                                 Matching players, creating memories
                             </Typography>
-                            <Button variant="contained" color="primary">
-                                Learn More
+                            <Button
+                                variant="contained"
+                                color="primary"
+                                href="/login"
+                            >
+                                Login
                             </Button>
                         </Grid>
                         <Grid item xs={12} md={6}>
