@@ -30,7 +30,7 @@ export default function Dashboard() {
         };
 
         fetchGames();
-    }, [process.env.NEXT_PUBLIC_URL]);
+    }, []);
 
     const handleSelectGame = (gameId) => {
         router.push(`/game/${gameId}`);

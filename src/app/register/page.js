@@ -15,7 +15,7 @@ import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
 
-export default function login() {
+export default function Page() {
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
@@ -28,15 +28,6 @@ export default function login() {
     const [showAlert, setShowAlert] = useState(false);
     const [alertMessage, setAlertMessage] = useState("");
     const [alertType, setAlertType] = useState("success");
-
-    useEffect(() => {
-        console.log(birthdate.format("MM-DD-YYYY"));
-    }, [birthdate]);
-
-    // useEffect(() => {
-    //     console.log(region);
-    //     console.log(language);
-    // }, [region, language]);
 
     const handleRegistration = async (e) => {
         e.preventDefault();
