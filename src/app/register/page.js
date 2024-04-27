@@ -29,9 +29,9 @@ export default function login() {
     const [alertMessage, setAlertMessage] = useState("");
     const [alertType, setAlertType] = useState("success");
 
-    useEffect(() => {
-        console.log(birthdate.format("MM-DD-YYYY"));
-    }, [birthdate]);
+    // useEffect(() => {
+    //     console.log(birthdate.format("MM-DD-YYYY"));
+    // }, [birthdate]);
 
     // useEffect(() => {
     //     console.log(region);
