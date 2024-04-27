@@ -1,102 +1,87 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+"use client";
+import React from "react";
+import { ThemeProvider } from "@mui/material/styles";
+import CssBaseline from "@mui/material/CssBaseline";
+import {
+    Container,
+    Grid,
+    Typography,
+    Button,
+    AppBar,
+    Toolbar,
+    Box,
+} from "@mui/material";
+import IconButton from "@mui/material/IconButton";
+import MenuIcon from "@mui/icons-material/Menu";
+import theme from "@/app/theme";
+import NavBar from "@/components/navBar";
 
-export default function Home() {
-	return (
-		<main className={styles.main}>
-			<div className={styles.description}>
-				<p>
-					Get started by editing&nbsp;
-					<code className={styles.code}>src/app/page.js</code>
-				</p>
-				<div>
-					<a
-						href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-						target="_blank"
-						rel="noopener noreferrer"
-					>
-						By{" "}
-						<Image
-							src="/vercel.svg"
-							alt="Vercel Logo"
-							className={styles.vercelLogo}
-							width={100}
-							height={24}
-							priority
-						/>
-					</a>
-				</div>
-			</div>
+export default function Page() {
+    return (
+        <ThemeProvider theme={theme}>
+            {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+            <CssBaseline />
 
-			<div className={styles.center}>
-				<Image
-					className={styles.logo}
-					src="/next.svg"
-					alt="Next.js Logo"
-					width={180}
-					height={37}
-					priority
-				/>
-			</div>
+            {/* <NavBar /> */}
 
-			<div className={styles.grid}>
-				<a
-					href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-					className={styles.card}
-					target="_blank"
-					rel="noopener noreferrer"
-				>
-					<h2>
-						Docs <span>-&gt;</span>
-					</h2>
-					<p>
-						Find in-depth information about Next.js features and
-						API.
-					</p>
-				</a>
+            {/* Hero Section */}
+            <Box
+                sx={{
+                    width: "100vw",
+                    height: "100vh",
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    //backgroundColor: "primary.main",
+                    //color: "white",
+                    // If you want to add a background image
+                    // backgroundImage: 'url(https://example.com/your-image.jpg)',
+                    // backgroundSize: 'cover',
+                }}
+            >
+                <Container maxWidth="lg" style={{ padding: "2rem 0" }}>
+                    <Grid container spacing={2} alignItems="center">
+                        <Grid item xs={12} md={6}>
+                            <Typography variant="h2" gutterBottom>
+                                Desync
+                            </Typography>
+                            <Typography variant="body1" paragraph>
+                                Matching players, creating memories
+                            </Typography>
+                            <Button
+                                variant="contained"
+                                color="primary"
+                                href="/login"
+                            >
+                                Login
+                            </Button>
+                        </Grid>
+                        <Grid item xs={12} md={6}>
+                            {/* Placeholder for an image or a component */}
+                        </Grid>
+                    </Grid>
+                </Container>
+            </Box>
 
-				<a
-					href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-					className={styles.card}
-					target="_blank"
-					rel="noopener noreferrer"
-				>
-					<h2>
-						Learn <span>-&gt;</span>
-					</h2>
-					<p>
-						Learn about Next.js in an interactive course
-						with&nbsp;quizzes!
-					</p>
-				</a>
-
-				<a
-					href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-					className={styles.card}
-					target="_blank"
-					rel="noopener noreferrer"
-				>
-					<h2>
-						Templates <span>-&gt;</span>
-					</h2>
-					<p>Explore starter templates for Next.js.</p>
-				</a>
-
-				<a
-					href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-					className={styles.card}
-					target="_blank"
-					rel="noopener noreferrer"
-				>
-					<h2>
-						Deploy <span>-&gt;</span>
-					</h2>
-					<p>
-						Instantly deploy your Next.js site to a shareable URL
-						with Vercel.
-					</p>
-				</a>
-			</div>
-		</main>
-	);
+            {/* Footer */}
+            <Box
+                component="footer"
+                sx={{
+                    width: "100%",
+                    py: 3,
+                    px: 2,
+                    mt: "auto",
+                    backgroundColor: "background.paper",
+                    textAlign: "center",
+                }}
+            >
+                <Container maxWidth="md">
+                    <Typography variant="body1" align="center">
+                        Footer
+                    </Typography>
+                </Container>
+            </Box>
+        </ThemeProvider>
+    );
 }

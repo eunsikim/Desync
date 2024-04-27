@@ -1,99 +1,133 @@
 "use client";
-import "mdb-react-ui-kit/dist/css/mdb.min.css";
-import "bootstrap/dist/css/bootstrap.min.css";
-import { useRouter } from "next/navigation";
-import { React, useState } from "react";
+import React, { useState } from "react";
+import { useRouter } from "next/navigation"; // Corrected import for Next.js v10 and later
 import {
-	MDBContainer,
-	MDBCheckbox,
-	MDBBtn,
-	MDBIcon,
-	MDBInput,
-} from "mdb-react-ui-kit";
-import { Alert } from "react-bootstrap";
+    Container,
+    TextField,
+    Button,
+    Alert,
+    Box,
+    Typography,
+} from "@mui/material";
 import { login } from "@/lib/auth";
+import secureLocalStorage from "react-secure-storage"; // Assuming you have this installed
 
 export default function Page() {
-	const [email, setEmail] = useState("");
-	const [password, setPassword] = useState("");
-	const [show, setShow] = useState(false);
-	const [message, setMessage] = useState("");
-	const [type, setType] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [show, setShow] = useState(false);
+    const [message, setMessage] = useState("");
+    const [type, setType] = useState("");
 
-	const router = useRouter();
+    const router = useRouter();
 
-	const handleLogin = async (e) => {
-		e.preventDefault();
+    const handleLogin = async (e) => {
+        e.preventDefault();
 
-		const res = await fetch(
-			`${process.env.NEXT_PUBLIC_URL}/api/hero/auth/login`,
-			{
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify({
-					email: email,
-					password: password,
-				}),
-			}
-		);
+        const res = await fetch(
+            `${process.env.NEXT_PUBLIC_URL}/api/hero/auth/login`,
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    email: email,
+                    password: password,
+                }),
+            }
+        );
 
-		const data = await res.json();
+        const data = await res.json();
 
-		if (data.message === `Login Successful`) {
-			setMessage(data.message);
-			setType("success");
+        if (data.message === `Login Successful`) {
+            setMessage(data.message);
+            setType("success");
 
-			await login(data);
+            // Assuming `login` function handles session storage or similar
+            // await login(data); // Make sure this function is adapted for MUI or removed if not necessary
 
-			router.push("/dashboard");
-		} else {
-			setMessage(data.message);
-			setType("danger");
-		}
-		setShow(true);
-	};
+            await login(data);
 
-	return (
-		<MDBContainer className="p-4 my-5 d-flex flex-column w-50">
-			<form
-				onSubmit={handleLogin}
-				className="p-4 my-5 d-flex flex-column"
-			>
-				{show && (
-					<Alert
-						key={type}
-						variant={type}
-						onClose={() => setShow(false)}
-						dismissible
-					>
-						{message}
-					</Alert>
-				)}
-				<MDBInput
-					wrapperClass="mb-4"
-					label="Email address"
-					id="form1"
-					type="email"
-					onChange={(e) => setEmail(e.target.value)}
-				/>
-				<MDBInput
-					wrapperClass="mb-4"
-					label="Password"
-					id="form2"
-					type="password"
-					onChange={(e) => setPassword(e.target.value)}
-				/>
-				<MDBBtn type="submit" className="mb-4">
-					Sign in
-				</MDBBtn>
-			</form>
-			<div className="text-center">
-				<p>
-					Not a member? <a href="/register">Register</a>
-				</p>
-			</div>
-		</MDBContainer>
-	);
+            secureLocalStorage.setItem("email", data.hero.email);
+            secureLocalStorage.setItem("id", data.hero.id);
+            secureLocalStorage.setItem("firstName", data.hero.first_name);
+            secureLocalStorage.setItem("lastName", data.hero.last_name);
+
+            router.push("/dashboard");
+        } else {
+            setMessage(data.message);
+            setType("danger"); // Note: MUI uses 'error' instead of 'danger' for Alert severity
+        }
+        setShow(true);
+    };
+
+    return (
+        <Container component="main" maxWidth="xs">
+            <Box
+                sx={{
+                    marginTop: 8,
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                }}
+            >
+                {show && (
+                    <Alert
+                        severity={type === "danger" ? "error" : type}
+                        onClose={() => setShow(false)}
+                        sx={{ width: "100%" }}
+                    >
+                        {message}
+                    </Alert>
+                )}
+                <Typography component="h1" variant="h5">
+                    Sign in
+                </Typography>
+                <Box
+                    component="form"
+                    onSubmit={handleLogin}
+                    noValidate
+                    sx={{ mt: 1 }}
+                >
+                    <TextField
+                        margin="normal"
+                        required
+                        fullWidth
+                        id="email"
+                        label="Email Address"
+                        name="email"
+                        autoComplete="email"
+                        autoFocus
+                        onChange={(e) => setEmail(e.target.value)}
+                    />
+                    <TextField
+                        margin="normal"
+                        required
+                        fullWidth
+                        name="password"
+                        label="Password"
+                        type="password"
+                        id="password"
+                        autoComplete="current-password"
+                        onChange={(e) => setPassword(e.target.value)}
+                    />
+                    <Button
+                        type="submit"
+                        fullWidth
+                        variant="contained"
+                        sx={{ mt: 3, mb: 2 }}
+                    >
+                        Sign In
+                    </Button>
+                    <Box textAlign="center">
+                        <Typography variant="body2">
+                            Not a member?{" "}
+                            <Button href="/register">Register</Button>
+                        </Typography>
+                    </Box>
+                </Box>
+            </Box>
+        </Container>
+    );
 }
