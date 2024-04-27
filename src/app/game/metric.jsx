@@ -74,7 +74,7 @@ export default function Metric(param) {
         };
 
         setUI();
-    }, []);
+    }, [gameMetric, playerMetric]);
 
     const marks = [
         {

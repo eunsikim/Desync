@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { getSession, getUserID } from "@/lib/auth";
 import {
     AppBar,
@@ -51,8 +51,6 @@ export default function ClientComponent(params) {
     const [gameMetric, setGameMetric] = useState({});
 
     const [value, setValue] = useState(0);
-
-    useEffect(() => {}, []);
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
